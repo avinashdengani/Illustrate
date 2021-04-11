@@ -8,6 +8,8 @@
 
     <com.example.illustrate.DrawingBoardView
         android:id="@+id/drawingView"
+        android:background="@drawable/drawing_board_background"
+        android:layout_margin="10dp"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -16,6 +16,7 @@ class DrawingBoardView(context: Context, attrs: AttributeSet):View(context,attrs
     private var brushSize: Float = 0.0F
     private  var color = Color.BLACK
 
+    private val pathList = ArrayList<CustomPath>()
     init{
         setUpDrawing()
     }
@@ -54,6 +55,12 @@ class DrawingBoardView(context: Context, attrs: AttributeSet):View(context,attrs
             drawingPaint!!.color = drawingPath!!.color
             canvas?.drawPath(drawingPath!!, drawingPaint!!)
         }
+
+        for(path in pathList){
+            drawingPaint!!.strokeWidth = path.brushThickness
+            drawingPaint!!.color = path.color
+            canvas?.drawPath(path, drawingPaint!!)
+        }
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
@@ -73,6 +80,7 @@ class DrawingBoardView(context: Context, attrs: AttributeSet):View(context,attrs
                 drawingPath!!.lineTo(touchX!!, touchY!!)
             }
             MotionEvent.ACTION_UP -> {
+                pathList.add(drawingPath!!)
                 drawingPath = CustomPath(color, brushSize)
             }
             else-> return false
