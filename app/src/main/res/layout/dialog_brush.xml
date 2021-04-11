@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="50dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Brush Size"
+        android:layout_marginBottom="20dp"
+        style="@style/TextAppearance.AppCompat.Large"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <ImageButton
+            android:id="@+id/btnSmallBrush"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/small_brush"
+            android:backgroundTint="@color/grey"
+            android:contentDescription="Brush Small"/>
+
+        <ImageButton
+            android:id="@+id/btnMediumBrush"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/medium_brush"
+            android:backgroundTint="@color/grey"
+            android:contentDescription="Brush Medium"/>
+
+        <ImageButton
+            android:id="@+id/btnLargeBrush"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/large_brush"
+            android:backgroundTint="@color/grey"
+            android:contentDescription="Brush Large"/>
+    </LinearLayout>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

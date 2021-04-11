@@ -11,7 +11,8 @@
         android:theme="@style/Theme.Illustrate">
         <activity android:name=".MainActivity"
             android:screenOrientation="portrait"
-            android:icon="@drawable/ic_baseline_palette_24">
+            android:icon="@drawable/ic_baseline_palette_24"
+            android:theme="@style/Theme.Illustrate.NoActionBarTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
