@@ -10,7 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Select Brush Size"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="10dp"
         style="@style/TextAppearance.AppCompat.Large"/>
 
     <LinearLayout
@@ -21,26 +21,34 @@
 
         <ImageButton
             android:id="@+id/btnSmallBrush"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:src="@drawable/small_brush"
-            android:backgroundTint="@color/grey"
+            android:foreground="?attr/selectableItemBackground"
             android:contentDescription="Brush Small"/>
 
         <ImageButton
             android:id="@+id/btnMediumBrush"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:src="@drawable/medium_brush"
-            android:backgroundTint="@color/grey"
+            android:foreground="?attr/selectableItemBackground"
             android:contentDescription="Brush Medium"/>
 
         <ImageButton
             android:id="@+id/btnLargeBrush"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:src="@drawable/large_brush"
-            android:backgroundTint="@color/grey"
+            android:foreground="?attr/selectableItemBackground"
+            android:contentDescription="Brush Large"/>
+
+        <ImageButton
+            android:id="@+id/btnExtraLargeBrush"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/extra_large_brush"
+            android:foreground="?attr/selectableItemBackground"
             android:contentDescription="Brush Large"/>
     </LinearLayout>
 

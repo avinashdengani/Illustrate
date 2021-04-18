@@ -18,7 +18,10 @@ class DrawingBoardView(context: Context, attrs: AttributeSet):View(context,attrs
     private var brushSize: Float = 0.0F
     private  var color = Color.BLACK
 
+
     private val pathList = ArrayList<CustomPath>()
+    private val undoPaths = ArrayList<CustomPath>()
+
     init{
         setUpDrawing()
     }
@@ -90,16 +93,27 @@ class DrawingBoardView(context: Context, attrs: AttributeSet):View(context,attrs
         invalidate()
         return true
     }
-    fun setBrushSize(newBrushSize: Float) {
+    public fun setBrushSize(newBrushSize: Float) {
         brushSize = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, newBrushSize, resources.displayMetrics)
 
         drawingPaint!!.strokeWidth = brushSize
     }
-    fun setColor(newColor: Int) {
+    public fun setColor(newColor: Int) {
         color = newColor
         drawingPaint!!.color = newColor
     }
-
+    public fun undo(){
+        if(pathList.size > 0){
+            undoPaths.add(pathList.removeAt(pathList.size - 1))
+            invalidate()// calls onDraw again so that remove path reflects
+        }
+    }
+    public fun redo(){
+        if(undoPaths.size > 0){
+            pathList.add(undoPaths.removeAt(undoPaths.size - 1))
+            invalidate()// calls onDraw again so that remove path reflects
+        }
+    }
     internal  inner class CustomPath(var color:Int, var brushThickness:Float): Path(){
 
     }
