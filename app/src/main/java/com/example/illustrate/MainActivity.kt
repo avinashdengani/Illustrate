@@ -5,7 +5,10 @@ import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.Canvas
 import android.graphics.Color
+import android.os.AsyncTask
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
@@ -16,6 +19,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.azeesoft.lib.colorpicker.ColorPickerDialog
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
 import java.lang.Exception
 
 
@@ -164,6 +171,14 @@ class MainActivity : AppCompatActivity() {
     public fun onUndo(view:View){
         drawingView.undo()
     }
+    public  fun onSave(view: View){
+        if(isWriteStorageAllowed()) {
+            val bitmap = getBitmapFromView(findViewById(R.id.drawingViewContainer))
+            SaveBitmapAsyncTask(bitmap).execute()
+        }else{
+            requestStoragePermission()
+        }
+    }
 
     private fun requestStoragePermission(){
         ActivityCompat.requestPermissions(this,
@@ -178,5 +193,80 @@ class MainActivity : AppCompatActivity() {
     }
     private fun isWriteStorageAllowed():Boolean {
         return  ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun getBitmapFromView(view: View) :Bitmap{
+        val bitmap = Bitmap.createBitmap(view.width,view.height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+
+        val bgImage = view.background
+
+        if(bgImage != null){
+            bgImage.draw(canvas)
+        }else{
+            canvas.drawColor(Color.WHITE)
+        }
+
+        view.draw(canvas)
+        return bitmap
+    }
+
+    private inner class  SaveBitmapAsyncTask(val bitmap:Bitmap) :AsyncTask< Any, Void, String>(){
+        private lateinit var  progressDialog:Dialog
+        override fun onPreExecute() {
+            super.onPreExecute()
+            showProgressDialog()
+        }
+
+        override fun doInBackground(vararg params: Any?): String {
+            var result = ""
+            if(bitmap!=null){
+                try{
+                    val filename = "illustrate-" + (System.currentTimeMillis()/100) + ".png"
+                    val bytes = ByteArrayOutputStream()
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 90, bytes)
+
+                    val basePath = externalCacheDir!!.absoluteFile.toString()
+                    val filePath = basePath + File.separator + filename
+                    val file = File(filePath)
+
+                    val fos = FileOutputStream(file)
+                    fos.write(bytes.toByteArray())
+                    fos.close()
+
+                    result = file.absolutePath
+                }catch(e: IOException){
+                    e.printStackTrace()
+                    Toast.makeText(
+                            applicationContext,
+                            "Failed to save image :( \nTry Again!",
+                            Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+            return  result
+        }
+
+        override fun onPostExecute(result: String?) {
+            super.onPostExecute(result)
+            hideProgressDialog()
+            if(!result!!.isEmpty()) {
+                Toast.makeText(
+                        applicationContext,
+                        "Image have been saved successfully!",
+                        Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+        private fun showProgressDialog() {
+            progressDialog = Dialog(this@MainActivity)
+            progressDialog.setContentView(R.layout.progress_dialog)
+            progressDialog.show()
+        }
+        private fun hideProgressDialog() {
+            if(progressDialog != null){
+                progressDialog.dismiss()
+            }
+        }
     }
 }

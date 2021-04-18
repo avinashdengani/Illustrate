@@ -9,6 +9,7 @@
     android:theme="@style/Theme.Illustrate.NoActionBarTheme">
 
     <FrameLayout
+        android:id="@+id/drawingViewContainer"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:padding="1dp"
@@ -97,6 +98,14 @@
                 android:layout_margin="5dp"
                 android:layout_marginRight="10dp"
                 android:onClick="onRedo"/>
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/btnSave"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_baseline_save_24"
+                android:layout_margin="5dp"
+                android:layout_marginRight="10dp"
+                android:onClick="onSave"/>
         </com.google.android.material.bottomappbar.BottomAppBar>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
